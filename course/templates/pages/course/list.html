@@ -1,0 +1,42 @@
+{% extends 'layouts/public_base.html' %}
+
+{% block description %}
+  List of django courses on our website
+{% endblock %}
+
+{% block keywords %}
+  Course List, Free courses, Django Courses, Python courses
+{% endblock %}
+
+{% block title %}
+  {{ title }}
+{% endblock %}
+
+{% block content %}
+  <section class="py-5">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 py-5">
+      {% for course in courses %}
+        <div class="col">
+          <div class="card shadow-sm">
+            <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg"
+                 role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
+              <title>Placeholder</title>
+              <rect width="100%" height="100%" fill="#55595c"></rect>
+              <text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>
+            </svg>
+
+            <div class="card-body">
+              <p class="card-text">{{ course.short_desc }}</p>
+              <a href="{% url 'course:course_detail' course.slug %}" class="btn btn-primary">More Details</a>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </section>
+{% endblock %}
+
+<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+
+
+</div>
