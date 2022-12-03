@@ -1,0 +1,37 @@
+{% extends "layouts/public_base.html" %}
+
+{% block description %}
+  Update a course
+{% endblock %}
+
+{% block keywords %}
+
+{% endblock %}
+
+{% block title %}
+  Update Course
+{% endblock %}
+
+{% block page-header %}
+  Update Course
+{% endblock %}
+
+{% block content %}
+  <div class="row py-5">
+    <div class="col-xs-12">
+      <div class="form">
+        <form method="post"
+              action="{% url 'course:update_course' form.instance.slug %}"
+              enctype="multipart/form-data"
+        >
+          {% csrf_token %}
+          {% include 'pages/course/form.html' %}
+          <div class="form-group">
+            <input class="form-control btn btn-primary" type="submit"
+                    value="Update Course">
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock %}

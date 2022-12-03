@@ -1,0 +1,29 @@
+{% extends "layouts/public_base.html" %}
+
+{% block description %}
+  Create a new course
+{% endblock %}
+
+{% block keywords %}
+
+{% endblock %}
+
+{% block title %}
+  Create Course
+{% endblock %}
+
+{% block page-header %}
+  Create Course
+{% endblock %}
+
+{% block content %}
+  <div class="row">
+    <div class="col-xs-12">
+      <form action="{% url 'course:delete_course' object.slug %}" method="post">
+          {% csrf_token %}
+        <p>Are you sure you want to delete "{{ object }}"?</p>
+        <input type="submit" value="Confirm" />
+      </form>
+    </div>
+  </div>
+{% endblock %}

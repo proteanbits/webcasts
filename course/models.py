@@ -17,6 +17,12 @@ class CourseCommonInfo(models.Model):
         abstract = True
 
 
+class PublishedCourseManager(models.Manager):
+    def get_queryset(self):
+        return super(PublishedCourseManager, self).get_queryset().filter(
+            status="PUB")
+
+
 # Create your models here.
 class Course(CourseCommonInfo):
     COURSE_STATUS = (
@@ -32,8 +38,17 @@ class Course(CourseCommonInfo):
                                            through='CourseSubscription')
     price = models.DecimalField(max_digits=5, decimal_places=2, default=0.0)
 
+    objects = models.Manager()
+    published = PublishedCourseManager()
+
     def __str__(self):
         return self.title
+
+    def has_subscription(self, user):
+        return user in self.subscriptions.all()
+
+    def is_author(self, user):
+        return user in self.authors.all()
 
     class Meta:
         db_table = 'course'
@@ -49,3 +64,11 @@ class CourseClass(CourseCommonInfo):
     title = models.CharField(max_length=250)
     is_free = models.BooleanField(default=False)
     course = models.ForeignKey(Course, related_name='classes', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name = 'course class'
+        verbose_name_plural = 'classes'
+        db_table = 'course_class'

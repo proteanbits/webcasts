@@ -15,37 +15,44 @@
 {% block content %}
   <section class="py-5">
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 py-5">
-        <div class="col">
-          <div class="card shadow-sm">
-            <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg"
-                 role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
-              <title>Placeholder</title>
-              <rect width="100%" height="100%" fill="#55595c"></rect>
-              <text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>
-            </svg>
+      <div class="col">
+        <div class="card shadow-sm">
+          <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg"
+               role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
+            <title>Placeholder</title>
+            <rect width="100%" height="100%" fill="#55595c"></rect>
+            <text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>
+          </svg>
 
-            <div class="card-body">
-              <p class="card-text">{{ course.desc }}</p>
-              <a href="#" class="btn btn-primary">More Details</a>
-            </div>
+          <div class="card-body">
+            <p class="card-text">{{ course.desc }}</p>
+            <a href="{% url 'course:update_course' course.slug %}" class="btn btn-primary btn-sm">Update</a>
+            <a href="{% url 'course:delete_course' course.slug %}" class="btn btn-primary btn-sm">Delete</a>
           </div>
         </div>
+      </div>
     </div>
   </section>
   <section>
+    <a class="btn btn-primary" href="{% url 'course:create_class' object.slug %}">Add a new class</a>
     <table class="table">
       <thead>
       <tr>
         <th scope="col">#</th>
         <th scope="col">Class title</th>
+        <th scope="col">Actions</th>
       </tr>
       </thead>
       <tbody>
       {% for class in course.classes.all %}
-      <tr>
-        <th scope="row">{{ forloop.counter }}</th>
-        <td><a href="{% url 'course:class_detail' class.slug %}">{{ class.title }}</a></td>
-      </tr>
+        <tr>
+          <th scope="row">{{ forloop.counter }}</th>
+          <td><a href="{% url 'course:class_detail' class.slug %}">{{ class.title }}</a></td>
+          <td>
+            <a href="{% url 'course:update_class' class.slug %}" class="btn btn-primary btn-sm">Update</a>
+            <a href="{% url 'course:delete_class' class.slug %}" class="btn btn-primary btn-sm">Delete</a>
+          </td>
+        </tr>
       {% endfor %}
       </tbody>
     </table>

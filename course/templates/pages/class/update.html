@@ -1,0 +1,52 @@
+{% extends "layouts/public_base.html" %}
+
+{% block description %}
+  Update a Class
+{% endblock %}
+
+{% block keywords %}
+
+{% endblock %}
+
+{% block title %}
+  Update Course
+{% endblock %}
+
+{% block page-header %}
+  Update Class
+{% endblock %}
+
+{% block content %}
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="form">
+        <form method="post"
+              action="{% url 'course:update_class' form.instance.slug %}"
+              enctype="multipart/form-data"
+        >
+          {% csrf_token %}
+          <div class="form-group
+            {% if form.course.errors %}
+              has-error
+            {% endif %}"
+          >
+            <label class="control-label" for="course">Course</label>
+            {{ form.course }}
+          </div>
+          {% include 'pages/class/form.html' %}
+          <div class="form-group">
+            <input class="form-control btn btn-primary" type="submit"
+                    value="Update Class">
+          </div>
+          {% if form.errors %}
+            <ul>
+            {% for field in form %}
+              {% if field.errors %}<li>{{ field.label }}: {{ field.errors|striptags }}</li>{% endif %}
+            {% endfor %}
+            </ul>
+          {% endif %}
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock %}

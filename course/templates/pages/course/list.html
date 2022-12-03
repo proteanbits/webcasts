@@ -15,7 +15,7 @@
 {% block content %}
   <section class="py-5">
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 py-5">
-      {% for course in courses %}
+      {% for course in object_list %}
         <div class="col">
           <div class="card shadow-sm">
             <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg"
@@ -26,12 +26,16 @@
             </svg>
 
             <div class="card-body">
-              <h4 class="card-text">{{  course.title }}</h4>
+              <h4 class="card-text">{{ course.title }}</h4>
               <p class="card-text">{{ course.short_desc }}</p>
-              <a href="{% url 'course:course_detail' course.slug %}" class="btn btn-primary">More Details</a>
+              <a href="{% url 'course:course_detail' course.slug %}" class="btn btn-primary btn-sm">More Details</a>
+              <a href="{% url 'course:update_course' course.slug %}" class="btn btn-primary btn-sm">Update</a>
+              <a href="{% url 'course:delete_course' course.slug %}" class="btn btn-primary btn-sm">Delete</a>
             </div>
           </div>
         </div>
+      {% empty %}
+        <li>No Courses yet.</li>
       {% endfor %}
     </div>
   </section>

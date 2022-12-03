@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+
+{% block description %}
+
+{% endblock %}
+
+{% block keywords %}
+
+{% endblock %}
+
+{% block title %}
+  Profile Update
+{% endblock %}
+
+{% block page-header %}
+  Profile Update
+{% endblock %}
+
+{% block content %}
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="form">
+        <form method="post"
+              action="{% url 'user:profile_update' %}"
+        >
+          {% csrf_token %}
+          <div class="form-group
+                      {% if user_form.username.errors %}
+                        has-error
+                      {% endif %}"
+          >
+            <label class="control-label" for="username">Username</label>
+            <input class="form-control" type="text" id="username"
+                    placeholder="Username" name="username"
+                    value="{{ user_form.username.value|default_if_none:"" }}">
+            {% if user_form.username.errors %}
+              <div class="form-group has-error">
+                <div class="control-label">
+                  {{ user_form.username.errors }}
+                </div>
+              </div>
+            {% endif %}
+          </div>
+          <div class="form-group
+                        {% if user_profile_form.fullname.errors %}
+                          has-error
+                        {% endif %}"
+          >
+            <label class="control-label" for="name">Full Name</label>
+            <input class="form-control" type="text" id="name"
+                   placeholder="Full Name" name="name"
+                   value="{{ user_profile_form.name.value|default_if_none:"" }}">
+            {% if user_profile_form.name.errors %}
+              <div class="form-group has-error">
+                <div class="control-label">
+                  {{ user_profile_form.name.errors }}
+                </div>
+              </div>
+            {% endif %}
+          </div>
+          <div class="form-group
+                        {% if user_profile_form.dob.errors %}
+                          has-error
+                        {% endif %}"
+          >
+            <label class="control-label" for="dob">Date of Birth</label>
+            <input class="form-control" type="date" id="dob"
+                   placeholder="Date of Birth" name="dob"
+                   value="{{ user_profile_form.dob.value|date:'Y-m-d' }}" >
+            {% if user_profile_form.dob.errors %}
+              <div class="form-group has-error">
+                <div class="control-label">
+                  {{ user_profile_form.dob.errors }}
+                </div>
+              </div>
+            {% endif %}
+          </div>
+          <div class="form-group">
+            <input class="form-control btn btn-primary" type="submit"
+                    value="Update Profile">
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock %}

@@ -1,7 +1,47 @@
 from django.contrib import admin
-from .models import Course, CourseClass, CourseSubscription
 
-# Register your models here.
-admin.site.register(Course)
-admin.site.register(CourseClass)
-admin.site.register(CourseSubscription)
+from course.models import CourseClass, Course, CourseSubscription
+
+
+class CourseSubscriptionsInline(admin.TabularInline):
+    model = CourseSubscription
+    extra = 1
+
+
+@admin.register(Course)
+class CourseAdmin(admin.ModelAdmin):
+
+    def num_of_classes(self, obj):
+        return obj.classes.all().count()
+
+    list_display = ('title', 'short_desc', 'price', 'num_of_classes')
+
+    fieldsets = [
+        ("Basic", {
+            "fields": ['title', 'slug', 'price', 'status']
+        }),
+        ("Description", {
+            "fields": ['short_desc', 'desc']
+        }),
+        ("Authors", {
+            "fields": ['authors']
+        })
+    ]
+
+    inlines = [
+        CourseSubscriptionsInline
+    ]
+
+
+@admin.register(CourseClass)
+class CourseClassAdmin(admin.ModelAdmin):
+    list_display = ('title', 'course', 'short_desc')
+
+    fieldsets = [
+        ("Basic", {
+            "fields": ['title', 'slug', 'course', 'is_free']
+        }),
+        ("Description", {
+            "fields": ['short_desc', 'desc']
+        }),
+    ]

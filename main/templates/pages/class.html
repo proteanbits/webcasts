@@ -1,0 +1,78 @@
+{% extends "layouts/public_base.html" %}
+
+{% block description %}
+  Class Details
+{% endblock %}
+
+{% block keywords %}
+
+{% endblock %}
+
+{% block title %}
+  Class Details
+{% endblock %}
+
+{% block page-header %}
+  {{ class }}
+{% endblock %}
+
+{% block content %}
+  <div class="row py-5">
+    <div class="col-xs-12">
+      <video controls width="100%">
+        <source src="{{ class.video_url }}" type="video/mp4">
+      </video>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12">
+      <h3> List of Classes</h3>
+      {% if class.course.classes.count  %}
+        <table class="table table-bordered table-condensed table-striped">
+          <thead>
+          <tr>
+            <th class="text-center visible-sm visible-md visible-lg">
+              Index
+            </th>
+            <th class="text-center">
+              Title
+            </th>
+            <th class="text-center">
+              Details
+            </th>
+          </tr>
+          </thead>
+          <tbody>
+          {% for cls in class.course.classes.all %}
+            <tr class="{% if class == cls %} success {% endif %}">
+              <td class="text-center col-ms-1 visible-sm visible-md visible-lg">
+                {{ forloop.counter }}
+              </td>
+              <td class="col-xs-2 col-sm-3">
+                <div>
+                  {% if class != cls %}
+                    {% if cls.is_free or is_subscribed or is_author %}
+                      <a href="{% url 'main:class' cls.slug %}">{{ cls }}</a>
+                    {% endif %}
+                  {% else %}
+                    {{ cls }}
+                  {% endif %}
+                  {% if not is_subscribed and not is_author and cls.is_free and class != cls %}
+                    <span class="label label-info pull-right">Free</span>
+                  {% endif %}
+                </div>
+              </td>
+              <td class="text-justify col-xs-10 col-sm-7">
+                {{ cls.short_desc }}
+              </td>
+            </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+      {% else %}
+        <h4> Sorry, there are no classes in the course yet</h4>
+      {% endif %}
+    </div>
+  </div>
+
+{% endblock %}
