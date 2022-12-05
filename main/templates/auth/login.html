@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "layouts/public_base.html" %}
 
 {% block title %}
   Login
@@ -9,11 +9,11 @@
 {% endblock %}
 
 {% block content %}
-  <div class="row">
+  <div class="row py-5">
     <div class="col-xs-12">
       <!-- log in form -->
       <div class="form">
-        <form method="post" action="{% url 'user:login' %}">
+        <form method="post" action="{% url 'main:login' %}">
           {% csrf_token %}
           <div class="form-group">
             <label class="control-label" for="signin-username">Username</label>
@@ -41,13 +41,11 @@
           </div>
           <input type="hidden" name="next" value="{{ next }}"/>
         </form>
-        <p class="message">Not registered? <a href="{% url 'user:register' %}">Create
+        <p class="message">Not registered? <a href="{% url 'main:register' %}">Create
           an account</a></p>
-        <p class="message">Trouble logging in? <a
-            href="{% url 'user:password_reset' %}">Reset your password</a></p>
+{#        <p class="message">Trouble logging in? <a#}
+{#            href="{% url 'user:password_reset' %}">Reset your password</a></p>#}
         <hr />
-        <a class="col-xs-12 btn btn-primary" href="{% url 'social:begin' 'twitter' %}{% if request.GET.next %}?next={{ request.GET.next }}{% endif %}">Login with Twitter</a>
-        <a class="col-xs-12 btn btn-primary" href="{% url "social:begin" "google-oauth2" %}{% if request.GET.next %}?next={{ request.GET.next }}{% endif %}">Google+</a>
       </div>
     </div>
   </div>
