@@ -1,11 +1,13 @@
 import datetime
 
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.urls import reverse
+from django.views import View
 
 from course.models import Course, CourseSubscription, CourseClass
-from main.forms import ContactForm
+from main.forms import ContactForm, NewUserForm
 
 from .decorators import published_course
 
@@ -53,6 +55,51 @@ def thank_you_contact_us(request):
     return render(request, 'pages/thank_you_contact_us.html')
 
 
+class Register(View):
+    """Create new User
+
+    Creates a new user. Sends an welcome email to user and new user
+    registered email to admin
+
+    """
+
+    # user = get_user_model()
+
+    def get(self, request):
+        """Show the initial UserCreationForm
+
+        Args:
+            request: HttpRequest
+
+        Returns:
+            object: HttpResponse
+        """
+        context = {
+            'form': NewUserForm
+        }
+        return render(request, 'auth/register.html', context)
+
+    def post(self, request):
+        """Handles the POST UserCreationForm.
+
+        Args:
+            request: HttpRequest
+
+        Returns:
+            object: HttpResponse
+        """
+        # TODO send emails by handling user_created signal?
+        form = NewUserForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('/')
+
+        context = {
+            'form': form
+        }
+        return render(request, 'auth/register.html', context)
+
+
 def courses(request):
     """Display a list of published courses
 
@@ -84,6 +131,7 @@ def show_course(request, slug):
     return render(request, 'pages/course.html', context)
 
 
+@login_required
 def course_class(request, slug):
     """Display individual classes
 
@@ -102,15 +150,7 @@ def course_class(request, slug):
     return render(request, 'pages/class.html', context)
 
 
-# class CourseClassShowMixin(UserPassesTestMixin):
-#     def test_func(self):
-#         CourseClass.objects.get(slug=self.kwargs['slug'])
-
-
-# class ShowCourseClass(CourseClassShowMixin, DetailView):
-#     template_name = 'class.html'
-#     model = CourseClass
-
+@login_required
 def subscribe(request, slug):
     course = Course.objects.filter(slug=slug).get()
 
@@ -122,6 +162,7 @@ def subscribe(request, slug):
                             kwargs={'slug': course.slug}))
 
 
+@login_required
 def profile(request):
     user = request.user
 

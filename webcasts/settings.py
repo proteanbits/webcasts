@@ -71,6 +71,9 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'webcasts.wsgi.application'
 
+LOGIN_URL = '/login/'
+LOGIN_REDIRECT_URL = '/profile/'
+LOGOUT_REDIRECT_URL = '/'
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
