@@ -26,5 +26,5 @@ urlpatterns = [
     path('login/', LoginView.as_view(template_name='auth/login.html'), name='login'),
     path('logout/', LogoutView.as_view(), name='logout'),
     path('profile/', profile, name='profile'),
-    path('profile/update/$', ProfileUpdate.as_view(), name='profile_update'),
+    path('profile/update/', ProfileUpdate.as_view(), name='profile_update'),
 ]
