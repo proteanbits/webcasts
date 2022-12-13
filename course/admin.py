@@ -18,7 +18,7 @@ class CourseAdmin(admin.ModelAdmin):
 
     fieldsets = [
         ("Basic", {
-            "fields": ['title', 'slug', 'price', 'status']
+            "fields": ['title', 'slug', 'price', 'status', 'thumbnail', 'video']
         }),
         ("Description", {
             "fields": ['short_desc', 'desc']

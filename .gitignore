@@ -123,6 +123,7 @@ coverage.xml
 ####<learn_django>#######
 .env
 static/*
+media
 
 learn_django/.Python
 learn_django/include/

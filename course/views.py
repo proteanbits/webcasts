@@ -22,7 +22,7 @@ class CourseOwnerMixin(UserPassesTestMixin):
 class CreateCourse(AuthorMixin, CreateView):
     model = Course
     template_name = 'pages/course/create.html'  # default is course_create_form.html
-    fields = ['title', 'price', 'short_desc', 'desc', 'status']
+    fields = ['title', 'price', 'short_desc', 'desc', 'status', 'thumbnail', 'video']
     permission_required = ('course.add_course',)
 
     def form_valid(self, form):
@@ -38,7 +38,7 @@ class CreateCourse(AuthorMixin, CreateView):
 class UpdateCourse(AuthorMixin, CourseOwnerMixin, UpdateView):
     model = Course
     template_name = 'pages/course/update.html'  # default is course_update_form.html
-    fields = ['title', 'price', 'short_desc', 'desc', 'status']
+    fields = ['title', 'price', 'short_desc', 'desc', 'status', 'thumbnail', 'video']
     permission_required = ('course.change_course',)
 
     def form_valid(self, form):
@@ -73,7 +73,7 @@ class DeleteCourse(AuthorMixin, CourseOwnerMixin, DeleteView):
 class CreateClass(AuthorMixin, CreateView):
     model = CourseClass
     template_name = 'pages/class/create.html'  # default is class_create_form.html
-    fields = ['title', 'is_free', 'short_desc', 'desc']
+    fields = ['title', 'is_free', 'short_desc', 'desc', 'thumbnail', 'video']
     permission_required = ('course.add_courseclass',)
 
     def get_context_data(self, **kwargs):

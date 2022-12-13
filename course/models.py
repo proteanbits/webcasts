@@ -13,8 +13,16 @@ class CourseCommonInfo(models.Model):
     slug = models.SlugField(max_length=255, unique=True, blank=False,
                             null=True)  # hyphenated lower case text of the title
 
+    thumbnail = models.ImageField(upload_to='thumbnails/', null=True, blank=True)
+    video = models.FileField(upload_to='videos/', null=True, blank=True)
+
     class Meta:
         abstract = True
+
+    def delete(self, *args, **kwargs):
+        self.thumbnail.delete()
+        self.video.delete()
+        super().delete(*args, **kwargs)
 
 
 class PublishedCourseManager(models.Manager):

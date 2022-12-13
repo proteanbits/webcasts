@@ -16,7 +16,7 @@
   <section class="mt-4">
     <div class="row">
       <div class="col-12">
-        <form action="{% url 'course:create_course' %}" method="post">
+        <form action="{% url 'course:create_course' %}" method="post" enctype="multipart/form-data">
           {% csrf_token %}
           {% include 'pages/course/form.html' %}
           <input type="submit" value="Submit">
