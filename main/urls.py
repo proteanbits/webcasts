@@ -2,7 +2,7 @@ from django.contrib.auth.views import LoginView, LogoutView
 from django.urls import path
 
 from .views import home, about_us, contact_us, thank_you_contact_us, courses, show_course, course_class, subscribe, \
-    profile, Register
+    profile, Register, ProfileUpdate
 
 app_name = 'main'
 
@@ -26,4 +26,5 @@ urlpatterns = [
     path('login/', LoginView.as_view(template_name='auth/login.html'), name='login'),
     path('logout/', LogoutView.as_view(), name='logout'),
     path('profile/', profile, name='profile'),
+    path('profile/update/$', ProfileUpdate.as_view(), name='profile_update'),
 ]

@@ -21,6 +21,31 @@
     <div class="col-xs-12">
       <div class="panel panel-primary">
         <div class="panel-heading">
+          <h3 class="panel-title">Profile Details
+            <a class="btn btn-warning btn-xs pull-right" href="{% url 'main:profile_update' %}">
+              Update Profile
+            </a>
+          </h3>
+        </div>
+        <table class="table table-striped">
+          <tbody>
+          <tr>
+            <td>
+              DOB
+            </td>
+            <td>
+              {{ user.profile.dob }}
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="row py-5">
+    <div class="col-xs-12">
+      <div class="panel panel-primary">
+        <div class="panel-heading">
           <h3 class="panel-title">My Subscribed Courses</h3>
         </div>
         <div class="list-group">

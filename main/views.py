@@ -1,13 +1,14 @@
 import datetime
 
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views import View
 
 from course.models import Course, CourseSubscription, CourseClass
-from main.forms import ContactForm, NewUserForm
+from main.forms import ContactForm, NewUserForm, UserForm, UserProfileForm
 
 from .decorators import published_course
 
@@ -170,3 +171,31 @@ def profile(request):
         'user': user,
     }
     return render(request, 'pages/profile.html', context)
+
+
+class ProfileUpdate(LoginRequiredMixin, View):
+    def get(self, request):
+        user_form = UserForm(initial={'username': request.user.username})
+        user_profile_form = UserProfileForm(
+            initial={'dob': request.user.profile.dob}
+        )
+        context = {
+            'user_form': user_form,
+            'user_profile_form': user_profile_form
+        }
+        return render(request, 'pages/update.html', context)
+
+    def post(self, request):
+        user_form = UserForm(request.POST, instance=request.user)
+        user_profile_form = UserProfileForm(request.POST,
+                                            instance=request.user.profile)
+        if user_form.is_valid() and user_profile_form.is_valid():
+            user_form.save()
+            user_profile_form.save()
+            return redirect('main:profile')
+
+        context = {
+            'user_form': user_form,
+            'user_profile_form': user_profile_form
+        }
+        return render(request, 'pages/update.html', context)
